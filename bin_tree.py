@@ -1,7 +1,9 @@
 class Node:
     def __init__(self, data):
-        self.data = data # Данные о вершинах
-        self.left = self.right = None # Значени левой и правой вершины по умолчанию
+        # Данные о вершинах
+        self.data = data
+        # Значени левой и правой вершины по умолчанию
+        self.left = self.right = None
         return
 
 class Tree:
@@ -16,26 +18,32 @@ class Tree:
         if node is None:
             return None, parent, False
 
-        if value == node.data: # сравнение текущего значения с текущем значением в узле, то такое значение мы не добовляем в древо
+        # сравнение текущего значения с текущем значением в узле, то такое значение мы не добовляем в древо
+        if value == node.data:
             return node, parent, True
 
-        if value < node.data: # сравнение текущего значения с текущем значением в узле
+        # сравнение текущего значения с текущем значением в узле
+        if value < node.data:
             if node.left:
                 return self.__find(node.left, node, value)
 
-        if value > node.data:  # сравнение текущего значения с текущем значением в узле
+        # сравнение текущего значения с текущем значением в узле
+        if value > node.data:
             if node.right:
                 return self.__find(node.right, node, value)
 
         return node, parent, False
-    def append(self, obj): # Добавления вершин
+
+    # Добавления вершин
+    def append(self, obj):
         if self.root is None:
             self.root = obj
             return obj
+        # метод для нахождения родительской вершины
+        s, p, fl_find = self.__find(self.root, None, obj.data)
 
-        s, p, fl_find = self.__find(self.root, None, obj.data) # метод для нахождения родительской вершины
-
-        if not fl_find and s: # распределение на левую и правую ветвь
+        # распределение на левую и правую ветвь
+        if not fl_find and s:
             if obj.data < s.data:
                 s.left = obj
             else:
@@ -43,21 +51,18 @@ class Tree:
 
         return obj
 
-
     def show_tree(self, node):
         if node is None:
             return
         self.show_tree(node.left)
         element = str(node.data)
         self.myStack.append(element)
-        #print(node.data)
         self.show_tree(node.right)
         element = str(node.data)
         self.novStack.append(element)
 
         if len(self.delStack) < 100:
             self.delStack.append(element)
-        #print(self.delStack)
         print(self.novStack)
         if len(self.novStack) >= 500:
             for step in self.delStack:
@@ -68,6 +73,7 @@ class Tree:
         print(self.novStack)
         print(self.delStack)
         print(self.myStack)
+
 
 v = []
 for element in range(1, 501):
